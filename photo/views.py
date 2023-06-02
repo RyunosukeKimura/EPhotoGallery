@@ -19,6 +19,8 @@ from .models import PhotoPost
 from django.views.generic import DetailView
 # django.views.genelicからDeleteViewをインポート
 from django.views.generic import DeleteView
+# django.views.genericからUpdateViewをインポート
+from django.views.generic import UpdateView
 
 class IndexView(ListView):
     '''
@@ -222,3 +224,50 @@ class PhotoDeleteView(DeleteView):
         '''
         # スーパークラスのdelete()を実行
         return super().delete(request, *args, **kwargs)
+    
+class PhotoEditView(CreateView,DetailView,UpdateView):
+    '''写真投稿ページのビュー
+    
+    PhotoPostFormで定義されているモデルとフィールドと連携して
+    投稿データをデータベースに登録する
+    
+    Attributes:
+      form_class: モデルとフィールドが登録されたフォームクラス
+      template_name: レンダリングするテンプレート
+      success_url: データベスへの登録完了後のリダイレクト先
+    '''
+    # forms.pyのPhotoPostFormをフォームクラスとして登録
+    form_class = PhotoPostForm
+    # レンダリングするテンプレート
+    template_name = "photo_edit.html"
+    # フォームデータ登録完了後のリダイレクト先
+    success_url = reverse_lazy('photo:post_done')
+
+    def form_valid(self, form):
+        '''CreateViewクラスのform_valid()をオーバーライド
+        
+        フォームのバリデーションを通過したときに呼ばれる
+        フォームデータの登録をここで行う
+        
+        parameters:
+          form(django.forms.Form):
+            form_classに格納されているPhotoPostFormオブジェクト
+        Return:
+          HttpResponseRedirectオブジェクト:
+            スーパークラスのform_valid()の戻り値を返すことで、
+            success_urlで設定されているURLにリダイレクトさせる
+        '''
+        # commit=FalseにしてPOSTされたデータを取得
+        postdata = form.save(commit=False)
+        # 投稿ユーザーのidを取得してモデルのuserフィールドに格納
+        postdata.user = self.request.user
+        # 投稿データをデータベースに登録
+        postdata.save()
+        # 戻り値はスーパークラスのform_valid()の戻り値(HttpResponseRedirect)
+        return super().form_valid(form)
+    
+
+    # post.htmlをレンダリングする
+    template_name ='photo_edit.html'
+    # クラス変数modelにモデルBlogPostを設定
+    model = PhotoPost
