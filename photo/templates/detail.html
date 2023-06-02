@@ -29,9 +29,13 @@
                     {% if request.user == object.user %}
                     <form  method="POST">
                     <!-- リンク先のURL
+                            photo/<photo_edit-->
+                    <a href="{% url 'photo:photo_edit' object.pk %}"
+                        class="btn btn-primary my-2">編集する</a>
+                    <!-- リンク先のURL
                             photo/<Photo postsテーブルのid値>/delete/-->
                     <a href="{% url 'photo:photo_delete' object.pk %}"
-                        class="btn btn-primary my-2">削除する</a>
+                        class="btn btn-secondary my-2">削除する</a>
                     {% endif %}
 
             </div>
