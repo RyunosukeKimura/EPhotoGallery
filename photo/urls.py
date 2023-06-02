@@ -12,6 +12,14 @@ urlpatterns = [
     # 写真投稿ページのアクセスはviewsモジュールのCreatePhotoViewを実行
     path('post/', views.CreatePhotoView.as_view(), name='post'),
 
+    # 編集ページ
+    # photo-detail/<Photo postsテーブルのid値>にマッチング
+    # <int:pk>は辞書{pk: id値(int)}としてDetailViewに渡される
+    path('photo-edit/<int:pk>',
+         views.PhotoEditView.as_view(),
+         name = 'photo_edit'
+         ),
+
     # 投稿完了ページのアクセスはviewsモジュールのPostSuccessViewを実行
     path('post_done/', views.PostSuccessView.as_view(), name='post_done'),
 
