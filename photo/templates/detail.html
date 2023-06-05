@@ -24,7 +24,8 @@
                 {% if object.image2 %}
                     <p><img src="{{ object.image2.url }}"></img></p>
                     {% endif %}
-                {% comment %} <p>{{object.views.url}}</p> {% endcomment %}
+                <a href="{% url 'photo:nice_success' %}" class="btn btn-primary my-2">いいね</a>
+                <p>いいね数：{{object.nice}}</p>
 
                     <!-- 投稿写真がログイン中のユーザーのものであれば削除ボタンを表示 -->
                     {% if request.user == object.user %}
