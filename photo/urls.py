@@ -52,4 +52,7 @@ urlpatterns = [
     # photo/<Photo postsテーブルのid値>/delete/にマッチング
     # <int:pk>は辞書{pk: id値(int)}としてDetailViewに渡される
     path('photo/<int:pk>/delete/', views.PhotoDeleteView.as_view(), name = 'photo_delete'),
+
+#     # 閲覧数のカウント
+#     path('add_count/<int:pk>', views.add_count, name='add_count'),
 ]

@@ -22,6 +22,8 @@ from django.views.generic import DeleteView
 # django.views.genericからUpdateViewをインポート
 from django.views.generic import UpdateView
 
+from django.shortcuts import redirect
+
 class IndexView(ListView):
     '''
     トップページのビュー
@@ -265,9 +267,10 @@ class PhotoEditView(CreateView,DetailView,UpdateView):
         postdata.save()
         # 戻り値はスーパークラスのform_valid()の戻り値(HttpResponseRedirect)
         return super().form_valid(form)
-    
 
-    # post.htmlをレンダリングする
-    template_name ='photo_edit.html'
-    # クラス変数modelにモデルBlogPostを設定
-    model = PhotoPost
+# def add_count(request, pk):
+#     count = PhotoPost.objects.get(pk=pk)
+#     count.views += 1
+#     count.save()
+#     return redirect('photo-detail', pk=count.pk)
+    

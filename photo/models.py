@@ -84,6 +84,10 @@ class PhotoPost(models.Model):
         # 日時を自動追加
         auto_now_add=True
     )
+    # 閲覧数のフィールド
+    # views = models.IntegerField(
+    #     default=0
+    # )
 
     def __str__(self):
         '''
@@ -91,3 +95,4 @@ class PhotoPost(models.Model):
         Retrun(str):投稿記事のタイトル
         '''
         return self.title
+    
