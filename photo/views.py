@@ -269,18 +269,5 @@ class PhotoEditView(CreateView,DetailView,UpdateView):
         return super().form_valid(form)
 
 class NiceSuccessView(TemplateView):
-    '''
-    いいね完了ページのビュー
-
-    Attributes:
-        template_name: レンダリングするテンプレート
-    '''
-    # index.htmlをレンダリングする
-    template_name = 'nice_success.html'
-
-    def add_count(pk):
-        count = PhotoPost.objects.get(pk=pk)
-        count.nice += 1
-        count.save()
-        return redirect('photo-detail', pk=count.pk)
-    
+    # レンダリングするテンプレート
+    template_name = "nice_success.html"
