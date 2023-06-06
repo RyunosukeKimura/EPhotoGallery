@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Dict
 from django.db.models.query import QuerySet
 from django.shortcuts import render
 # django.views.genericからTemplateViewをインポート
@@ -21,8 +21,9 @@ from django.views.generic import DetailView
 from django.views.generic import DeleteView
 # django.views.genericからUpdateViewをインポート
 from django.views.generic import UpdateView
-
-from django.shortcuts import redirect
+# 追加
+# django.db.modelsからF関数をインポート
+from django.db.models import F
 
 class IndexView(ListView):
     '''
@@ -268,6 +269,10 @@ class PhotoEditView(CreateView,DetailView,UpdateView):
         # 戻り値はスーパークラスのform_valid()の戻り値(HttpResponseRedirect)
         return super().form_valid(form)
 
-class NiceSuccessView(TemplateView):
-    # レンダリングするテンプレート
-    template_name = "nice_success.html"
+# class NiceSuccessView(TemplateView):
+#     # レンダリングするテンプレート
+#     template_name = "nice_success.html"
+
+def count(request, pk):
+    PhotoPost.objects.filter(pk=pk).update(nice=F('nice') + 1)
+    return render(request, 'nice_success.html')

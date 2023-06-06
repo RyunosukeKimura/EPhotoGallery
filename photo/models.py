@@ -84,7 +84,7 @@ class PhotoPost(models.Model):
         # 日時を自動追加
         auto_now_add=True
     )
-    # 閲覧数のフィールド
+    # いいね数のフィールド
     nice = models.IntegerField(
         default=0
     )

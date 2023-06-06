@@ -54,5 +54,5 @@ urlpatterns = [
     path('photo/<int:pk>/delete/', views.PhotoDeleteView.as_view(), name = 'photo_delete'),
 
     # いいね数のカウント
-    path('nice_success/', views.NiceSuccessView.as_view(), name='nice_success'),
+    path('photo/<int:pk>/nice/', views.count, name='nice_success'),
 ]
